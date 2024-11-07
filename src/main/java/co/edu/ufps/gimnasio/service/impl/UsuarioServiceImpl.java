@@ -67,7 +67,7 @@ public class UsuarioServiceImpl  implements UsuarioService{
 			 usuarioReturn.setNombre(usuario.getNombre());
 			 usuarioReturn.setTelefono(usuario.getTelefono());
 			 usuarioReturn.setFechaNacimiento(usuario.getFechaNacimiento());
-			// usuarioReturn.setEstado(usuario.isEstado());
+			 usuarioReturn.setEstado(usuario.isEstado());
 			 Usuario usuarioSave= usuarioReporitory.save(usuarioReturn);
 			 return modelMapper.map(usuarioSave, UsuarioDTO.class);
 		}

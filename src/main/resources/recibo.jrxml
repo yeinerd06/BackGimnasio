@@ -81,7 +81,7 @@
 				<textElement>
 					<font fontName="SansSerif" size="19" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ENERGY TIME]]></text>
+				<text><![CDATA[MAS FITNESS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="95" y="25" width="205" height="15" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde"/>

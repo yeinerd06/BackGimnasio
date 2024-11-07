@@ -41,23 +41,30 @@ public class AWSS3ServiceImpl implements AWSS3Service {
 
 	@Override
 	public String uploadFile(String ruta, MultipartFile file) {
-		String folderKey = ruta.endsWith("/") ? ruta : ruta + "/";
-		String newFileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-		
-		LOGGER.info("Subiendo archivo con el nombre... " + newFileName);
-		ObjectMetadata metadata = new ObjectMetadata();
-		metadata.setContentLength(file.getSize());
-		metadata.setContentType(file.getContentType());
-		try (InputStream inputStream = file.getInputStream()) {
-			PutObjectRequest request = new PutObjectRequest(bucketName, folderKey + newFileName, inputStream, metadata);
-			amazonS3.putObject(request);
-			
-			return newFileName;
-		} catch (IOException e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-		return null;
+	    // Remove leading and trailing slashes from ruta
+	    String folderKey = ruta.replaceAll("^/+", "").replaceAll("/+$", "");
+	    if (!folderKey.isEmpty()) {
+	        folderKey += "/";
+	    }
+	    String newFileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+	    
+	    LOGGER.info("Subiendo archivo con el nombre... " + newFileName);
+	    ObjectMetadata metadata = new ObjectMetadata();
+	    metadata.setContentLength(file.getSize());
+	    metadata.setContentType(file.getContentType());
+	    try (InputStream inputStream = file.getInputStream()) {
+	        PutObjectRequest request = new PutObjectRequest(bucketName, folderKey + newFileName, inputStream, metadata);
+	        amazonS3.putObject(request);
+	        
+	        // Return the URL of the uploaded file
+	        return amazonS3.getUrl(bucketName, folderKey + newFileName).toString();
+	    } catch (IOException e) {
+	        LOGGER.error(e.getMessage(), e);
+	    }
+	    return null;
 	}
+
+
 
 	@Override
 	public InputStream downloadFile(String ruta, String key) {

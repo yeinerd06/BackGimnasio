@@ -59,9 +59,11 @@ public class CorporativoServiceImpl implements CorporativoService {
 		List<Corporativo>corporativo=corporativoRepository.findAll();
 		if(!corporativo.isEmpty()) {
 			Corporativo cor=corporativo.get(0);
-			if(cor.getLogo()!=null) {
+			/*
+			 if(cor.getLogo()!=null) {
 				awss3Service.deleteFile(ruta, cor.getLogo());
 			}
+			 */
 			String logo=awss3Service.createFolderFile(ruta, file);
 			cor.setLogo(logo);
 			return corporativoRepository.save(cor);
@@ -80,9 +82,11 @@ public class CorporativoServiceImpl implements CorporativoService {
 		List<Corporativo>corporativo=corporativoRepository.findAll();
 		if(!corporativo.isEmpty()) {
 			Corporativo cor=corporativo.get(0);
-			if(cor.getHorario()!=null) {
+			/*
+			 if(cor.getHorario()!=null) {
 				awss3Service.deleteFile(ruta, cor.getHorario());
 			}
+			 */
 			String horario=awss3Service.createFolderFile(ruta, file);
 			cor.setHorario(horario);
 			return corporativoRepository.save(cor);
